@@ -7,13 +7,14 @@
 
 import SwiftUI
 
+
 @main
 struct techuchebaApp: App {
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

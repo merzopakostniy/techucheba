@@ -6,13 +6,37 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		58A0A5AA2DEF08BE00ECEFAE /* AppLovinYandexMobileAdsAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 58A0A5A92DEF08BE00ECEFAE /* AppLovinYandexMobileAdsAdapters */; };
+		58A0A5AC2DEF08BE00ECEFAE /* GoogleYandexMobileAdsAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 58A0A5AB2DEF08BE00ECEFAE /* GoogleYandexMobileAdsAdapters */; };
+		58A0A5AE2DEF08BE00ECEFAE /* MintegralYandexMobileAdsAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 58A0A5AD2DEF08BE00ECEFAE /* MintegralYandexMobileAdsAdapters */; };
+		58A0A5B02DEF08BE00ECEFAE /* MyTargetYandexMobileAdsAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 58A0A5AF2DEF08BE00ECEFAE /* MyTargetYandexMobileAdsAdapters */; };
+		58A0A5B22DEF08BE00ECEFAE /* VungleYandexMobileAdsAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 58A0A5B12DEF08BE00ECEFAE /* VungleYandexMobileAdsAdapters */; };
+		58A0A5B42DEF08BE00ECEFAE /* YandexMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 58A0A5B32DEF08BE00ECEFAE /* YandexMobileAds */; };
+		58A0A5B62DEF08BE00ECEFAE /* YandexMobileAdsInstream in Frameworks */ = {isa = PBXBuildFile; productRef = 58A0A5B52DEF08BE00ECEFAE /* YandexMobileAdsInstream */; };
+		58A0A5B82DEF08BE00ECEFAE /* YandexMobileAdsMediation in Frameworks */ = {isa = PBXBuildFile; productRef = 58A0A5B72DEF08BE00ECEFAE /* YandexMobileAdsMediation */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		58E97E7D2DED934100FDE7C6 /* techucheba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = techucheba.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		58A0A5BA2DEF0AEC00ECEFAE /* Exceptions for "techucheba" folder in "techucheba" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 58E97E7C2DED934100FDE7C6 /* techucheba */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		58E97E7F2DED934100FDE7C6 /* techucheba */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				58A0A5BA2DEF0AEC00ECEFAE /* Exceptions for "techucheba" folder in "techucheba" target */,
+			);
 			path = techucheba;
 			sourceTree = "<group>";
 		};
@@ -23,16 +47,32 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58A0A5AA2DEF08BE00ECEFAE /* AppLovinYandexMobileAdsAdapters in Frameworks */,
+				58A0A5B02DEF08BE00ECEFAE /* MyTargetYandexMobileAdsAdapters in Frameworks */,
+				58A0A5AC2DEF08BE00ECEFAE /* GoogleYandexMobileAdsAdapters in Frameworks */,
+				58A0A5B82DEF08BE00ECEFAE /* YandexMobileAdsMediation in Frameworks */,
+				58A0A5AE2DEF08BE00ECEFAE /* MintegralYandexMobileAdsAdapters in Frameworks */,
+				58A0A5B62DEF08BE00ECEFAE /* YandexMobileAdsInstream in Frameworks */,
+				58A0A5B42DEF08BE00ECEFAE /* YandexMobileAds in Frameworks */,
+				58A0A5B22DEF08BE00ECEFAE /* VungleYandexMobileAdsAdapters in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		58A0A5A82DEF08BE00ECEFAE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		58E97E742DED934100FDE7C6 = {
 			isa = PBXGroup;
 			children = (
 				58E97E7F2DED934100FDE7C6 /* techucheba */,
+				58A0A5A82DEF08BE00ECEFAE /* Frameworks */,
 				58E97E7E2DED934100FDE7C6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -65,6 +105,14 @@
 			);
 			name = techucheba;
 			packageProductDependencies = (
+				58A0A5A92DEF08BE00ECEFAE /* AppLovinYandexMobileAdsAdapters */,
+				58A0A5AB2DEF08BE00ECEFAE /* GoogleYandexMobileAdsAdapters */,
+				58A0A5AD2DEF08BE00ECEFAE /* MintegralYandexMobileAdsAdapters */,
+				58A0A5AF2DEF08BE00ECEFAE /* MyTargetYandexMobileAdsAdapters */,
+				58A0A5B12DEF08BE00ECEFAE /* VungleYandexMobileAdsAdapters */,
+				58A0A5B32DEF08BE00ECEFAE /* YandexMobileAds */,
+				58A0A5B52DEF08BE00ECEFAE /* YandexMobileAdsInstream */,
+				58A0A5B72DEF08BE00ECEFAE /* YandexMobileAdsMediation */,
 			);
 			productName = techucheba;
 			productReference = 58E97E7D2DED934100FDE7C6 /* techucheba.app */;
@@ -94,6 +142,9 @@
 			);
 			mainGroup = 58E97E742DED934100FDE7C6;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				58A0A59B2DEF028500ECEFAE /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 58E97E7E2DED934100FDE7C6 /* Products */;
 			projectDirPath = "";
@@ -247,12 +298,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = techucheba/techucheba.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 72NW38U5VN;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = techucheba/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Metrotest;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -263,11 +318,11 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.4;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = merzopakostniy.techucheba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -286,12 +341,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = techucheba/techucheba.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 72NW38U5VN;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = techucheba/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Metrotest;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -302,11 +361,11 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.4;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = merzopakostniy.techucheba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -341,6 +400,60 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		58A0A59B2DEF028500ECEFAE /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yandexmobile/yandex-ads-sdk-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.13.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		58A0A5A92DEF08BE00ECEFAE /* AppLovinYandexMobileAdsAdapters */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 58A0A59B2DEF028500ECEFAE /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
+			productName = AppLovinYandexMobileAdsAdapters;
+		};
+		58A0A5AB2DEF08BE00ECEFAE /* GoogleYandexMobileAdsAdapters */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 58A0A59B2DEF028500ECEFAE /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
+			productName = GoogleYandexMobileAdsAdapters;
+		};
+		58A0A5AD2DEF08BE00ECEFAE /* MintegralYandexMobileAdsAdapters */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 58A0A59B2DEF028500ECEFAE /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
+			productName = MintegralYandexMobileAdsAdapters;
+		};
+		58A0A5AF2DEF08BE00ECEFAE /* MyTargetYandexMobileAdsAdapters */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 58A0A59B2DEF028500ECEFAE /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
+			productName = MyTargetYandexMobileAdsAdapters;
+		};
+		58A0A5B12DEF08BE00ECEFAE /* VungleYandexMobileAdsAdapters */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 58A0A59B2DEF028500ECEFAE /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
+			productName = VungleYandexMobileAdsAdapters;
+		};
+		58A0A5B32DEF08BE00ECEFAE /* YandexMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 58A0A59B2DEF028500ECEFAE /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
+			productName = YandexMobileAds;
+		};
+		58A0A5B52DEF08BE00ECEFAE /* YandexMobileAdsInstream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 58A0A59B2DEF028500ECEFAE /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
+			productName = YandexMobileAdsInstream;
+		};
+		58A0A5B72DEF08BE00ECEFAE /* YandexMobileAdsMediation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 58A0A59B2DEF028500ECEFAE /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
+			productName = YandexMobileAdsMediation;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 58E97E752DED934100FDE7C6 /* Project object */;
 }
