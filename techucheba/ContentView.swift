@@ -549,13 +549,24 @@ struct InfoSheet: View {
                 .ignoresSafeArea()
                 .blur(radius: 40)
             VStack(spacing: 0) {
-                // УБРАН HStack с крестиком
                 VStack(spacing: 0) {
-                    Text("Информация о приложении")
-                        .font(.title2.bold())
-                        .foregroundColor(.white)
-                        .padding(.top, 18)
-                        .padding(.bottom, 8)
+                    HStack {
+                        Text("Информация о приложении")
+                            .font(.title2.bold())
+                            .foregroundColor(.white)
+                        Spacer()
+                        Button(action: { showInfoSheet = false }) {
+                            Image(systemName: "xmark")
+                                .font(.title3.bold())
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color.white.opacity(0.12))
+                                .clipShape(Circle())
+                        }
+                    }
+                    .padding(.top, 18)
+                    .padding(.horizontal, 18)
+                    .padding(.bottom, 8)
                     Divider().background(Color.white.opacity(0.18))
                     ScrollView {
                         VStack(alignment: .leading, spacing: 18) {
