@@ -7,27 +7,31 @@
 
 import SwiftUI
 import CoreData
-import YandexMobileAds
 import Foundation
+import YandexMobileAds
 
 
 
 
 let depots: [Depot] = [
-    Depot(name: "Владыкино", qaList: qaVladykino),
+    Depot(name: "Братеево", qaList: qaBrateevo),
     Depot(name: "Варшавское", qaList: qaVarshavskoe),
+    Depot(name: "Владыкино", qaList: qaVladykino),
     Depot(name: "Замоскворецкое", qaList: qaZamoskvoretskoe),
+    Depot(name: "Измайлово", qaList: qaIzmailovo),
+    Depot(name: "Калужское", qaList: qaKaluzhskoe),
+    Depot(name: "Красная Пресня", qaList: qaKrasnayaPresnya),
+    Depot(name: "Лихоборы", qaList: qaLikhobory),
+    Depot(name: "Митино", qaList: qaMitino),
     Depot(name: "Новогиреево", qaList: qaNovogireevo),
+    Depot(name: "Печатники", qaList: qaPechatniki),
+    Depot(name: "Планерное", qaList: qaPlanernoe),
     Depot(name: "Свиблово", qaList: qaSviblovo),
     Depot(name: "Северное", qaList: qaSevernoe),
-    Depot(name: "Братеево", qaList: qaBrateevo),
     Depot(name: "Сокол", qaList: qaSokol),
-    Depot(name: "Печатники", qaList: qaPechatniki),
-    Depot(name: "Измайлово", qaList: qaIzmailovo),
     Depot(name: "Черкизово", qaList: qaCherkizovo),
-    Depot(name: "Красная Пресня", qaList: qaKrasnayaPresnya),
     Depot(name: "Южное", qaList: qaYuzhnoe),
-  //  Depot(name: "Нижегородское", qaList: qaNizhegorodskoe),
+    //  Depot(name: "Нижегородское", qaList: qaNizhegorodskoe),
     // ... добавь остальные депо ...
 ]
 
@@ -44,26 +48,36 @@ struct Depot: Identifiable, Hashable, Equatable {
 }
 
 
- struct BannerAdView: UIViewRepresentable {
-    func makeUIView(context: Context) -> AdView {
-        let adView = AdView(adUnitID: "R-M-15742337-1", adSize: .fixedSize(withWidth: 350, height: 50))
+struct BannerAdView: UIViewRepresentable {
+    func makeUIView(context: Context) -> YMAAdView {
+        let adSize = YMABannerAdSize.fixedSize(with: CGSize(width: 350, height: 50))
+        let adView = YMAAdView(adUnitID: "R-M-15742337-1", adSize: adSize)
         adView.delegate = context.coordinator
         adView.loadAd()
         return adView
     }
 
-    func updateUIView(_ uiView: AdView, context: Context) {}
+    func updateUIView(_ uiView: YMAAdView, context: Context) {}
 
     func makeCoordinator() -> Coordinator {
         Coordinator()
     }
 
-    class Coordinator: NSObject, AdViewDelegate {
-        func adViewDidLoad(_ adView: AdView) {
-            print("Ad loaded")
+    class Coordinator: NSObject, YMAAdViewDelegate {
+        func adViewDidLoad(_ adView: YMAAdView) {
+            print("✅ Yandex Ad loaded successfully")
         }
-        func adView(_ adView: AdView, didFailLoadingWithError error: Error) {
-            print("Ad failed: \(error.localizedDescription)")
+        
+        func adViewDidFailLoading(_ adView: YMAAdView, error: Error) {
+            print("❌ Yandex Ad failed: \(error.localizedDescription)")
+        }
+        
+        func adViewDidClick(_ adView: YMAAdView) {
+            print("👆 Ad clicked")
+        }
+        
+        func adView(_ adView: YMAAdView, willPresentScreen viewController: UIViewController?) {
+            print("📱 Ad will present screen")
         }
     }
 }
@@ -82,6 +96,7 @@ struct ContentView: View {
     @FocusState private var isTextFieldFocused: Bool
     @State private var showDepotSheet: Bool = false
     @State private var showInfoSheet: Bool = false // Новое состояние для инфо
+    @State private var showElectroSafetySheet: Bool = false
     
     var body: some View {
         ZStack {
@@ -150,6 +165,25 @@ struct ContentView: View {
                     .animation(.spring(), value: isTextFieldFocused)
                 }
                 .padding(.horizontal)
+                
+                Button(action: { showElectroSafetySheet = true }) {
+                    HStack(spacing: 10) {
+                        Image(systemName: "bolt.shield")
+                            .font(.title3.bold())
+                        Text("Сдача электробезопасности")
+                            .font(.headline)
+                    }
+                    .foregroundColor(.white)
+                    .padding(.vertical, 12)
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.9), Color.purple.opacity(0.9)]), startPoint: .leading, endPoint: .trailing)
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                    .shadow(color: Color.black.opacity(0.18), radius: 10, x: 0, y: 6)
+                }
+                .buttonStyle(PlainButtonStyle())
+                .padding(.horizontal)
                 // Карточка результата
                 Spacer(minLength: 1)
                 if showResult {
@@ -197,6 +231,9 @@ struct ContentView: View {
         .sheet(isPresented: $showInfoSheet) {
             InfoSheet(showInfoSheet: $showInfoSheet)
         }
+        .sheet(isPresented: $showElectroSafetySheet) {
+            ElectroSafetySheet(showElectroSafetySheet: $showElectroSafetySheet)
+        }
     }
     
     private func searchQA() {
@@ -210,6 +247,131 @@ struct ContentView: View {
             $0.key.lowercased().contains(search) ||
             $0.question.lowercased().contains(search) ||
             $0.answer.lowercased().contains(search)
+            }
+        }
+        withAnimation {
+            showResult = true
+        }
+    }
+}
+
+struct ElectroSafetySheet: View {
+    @Binding var showElectroSafetySheet: Bool
+    @State private var keyInput: String = ""
+    @State private var foundQAs: [QA] = []
+    @State private var showResult: Bool = false
+    @FocusState private var isTextFieldFocused: Bool
+    
+    var body: some View {
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [Color.purple.opacity(0.7), Color.blue.opacity(0.7)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                .ignoresSafeArea()
+            Color.white.opacity(0.1)
+                .ignoresSafeArea()
+                .blur(radius: 40)
+            VStack(spacing: 24) {
+                HStack {
+                    Text("Электробезопасность")
+                        .font(.title2.bold())
+                        .foregroundColor(.white)
+                    Spacer()
+                    Button(action: { showElectroSafetySheet = false }) {
+                        Image(systemName: "xmark")
+                            .font(.title3.bold())
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(Color.white.opacity(0.12))
+                            .clipShape(Circle())
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.top, 16)
+                
+                HStack {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                            .fill(Color.white.opacity(0.18))
+                            .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
+                        TextField("Введите номер вопроса или ключевое слово", text: $keyInput)
+                            .padding(.horizontal, 18)
+                            .padding(.vertical, 14)
+                            .foregroundColor(.white)
+                            .font(.title3)
+                            .focused($isTextFieldFocused)
+                            .accentColor(.white)
+                            .disableAutocorrection(true)
+                            .autocapitalization(.none)
+                    }
+                    .frame(height: 52)
+                    Button(action: {
+                        searchQA()
+                        isTextFieldFocused = false
+                    }) {
+                        ZStack {
+                            Circle()
+                                .fill(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .top, endPoint: .bottom))
+                                .frame(width: 52, height: 52)
+                                .shadow(color: .purple.opacity(0.3), radius: 8, x: 0, y: 4)
+                            Image(systemName: "magnifyingglass")
+                                .font(.title2.bold())
+                                .foregroundColor(.white)
+                        }
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .scaleEffect(isTextFieldFocused ? 1.1 : 1.0)
+                    .animation(.spring(), value: isTextFieldFocused)
+                }
+                .padding(.horizontal)
+                
+                Spacer(minLength: 1)
+                if showResult {
+                    Group {
+                        if !foundQAs.isEmpty {
+                            ScrollView {
+                                VStack(spacing: 24) {
+                                    ForEach(foundQAs, id: \.self) { qa in
+                                        QAResultCard(qa: qa)
+                                    }
+                                }
+                            }
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                        } else {
+                            EmptyResultCard()
+                                .transition(.opacity)
+                        }
+                    }
+                    .animation(.spring(response: 0.5, dampingFraction: 0.8), value: foundQAs)
+                }
+                
+                BannerAdView()
+                    .frame(height: 50)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
+                            .fill(Color.white.opacity(0.15))
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
+                            .stroke(Color.white.opacity(0.5), lineWidth: 2)
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    .shadow(color: .black.opacity(0.12), radius: 8, x: 0, y: 4)
+                    .padding(.horizontal, 16)
+            }
+        }
+        .ignoresSafeArea(.keyboard)
+    }
+    
+    private func searchQA() {
+        let search = keyInput.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let isKeyOnly = qaElectroSafety.contains { $0.key.lowercased() == search }
+        if isKeyOnly {
+            foundQAs = qaElectroSafety.filter { $0.key.lowercased() == search }
+        } else {
+            foundQAs = qaElectroSafety.filter {
+                search.isEmpty ||
+                $0.key.lowercased().contains(search) ||
+                $0.question.lowercased().contains(search) ||
+                $0.answer.lowercased().contains(search)
             }
         }
         withAnimation {
@@ -454,4 +616,3 @@ struct InfoSheet: View {
 #Preview {
     ContentView()
 }
-
