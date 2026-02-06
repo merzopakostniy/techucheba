@@ -7,14 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		587CCFC52F36A0C0001E9312 /* AppLovinYandexMobileAdsAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 587CCFC42F36A0C0001E9312 /* AppLovinYandexMobileAdsAdapters */; };
-		587CCFC72F36A0C0001E9312 /* GoogleYandexMobileAdsAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 587CCFC62F36A0C0001E9312 /* GoogleYandexMobileAdsAdapters */; };
-		587CCFC92F36A0C0001E9312 /* MintegralYandexMobileAdsAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 587CCFC82F36A0C0001E9312 /* MintegralYandexMobileAdsAdapters */; };
-		587CCFCB2F36A0C0001E9312 /* MyTargetYandexMobileAdsAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 587CCFCA2F36A0C0001E9312 /* MyTargetYandexMobileAdsAdapters */; };
-		587CCFCD2F36A0C0001E9312 /* VungleYandexMobileAdsAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 587CCFCC2F36A0C0001E9312 /* VungleYandexMobileAdsAdapters */; };
 		587CCFCF2F36A0C0001E9312 /* YandexMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 587CCFCE2F36A0C0001E9312 /* YandexMobileAds */; };
-		587CCFD12F36A0C0001E9312 /* YandexMobileAdsInstream in Frameworks */ = {isa = PBXBuildFile; productRef = 587CCFD02F36A0C0001E9312 /* YandexMobileAdsInstream */; };
-		587CCFD32F36A0C0001E9312 /* YandexMobileAdsMediation in Frameworks */ = {isa = PBXBuildFile; productRef = 587CCFD22F36A0C0001E9312 /* YandexMobileAdsMediation */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,14 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				587CCFC52F36A0C0001E9312 /* AppLovinYandexMobileAdsAdapters in Frameworks */,
-				587CCFCB2F36A0C0001E9312 /* MyTargetYandexMobileAdsAdapters in Frameworks */,
-				587CCFC72F36A0C0001E9312 /* GoogleYandexMobileAdsAdapters in Frameworks */,
-				587CCFD32F36A0C0001E9312 /* YandexMobileAdsMediation in Frameworks */,
-				587CCFC92F36A0C0001E9312 /* MintegralYandexMobileAdsAdapters in Frameworks */,
-				587CCFD12F36A0C0001E9312 /* YandexMobileAdsInstream in Frameworks */,
 				587CCFCF2F36A0C0001E9312 /* YandexMobileAds in Frameworks */,
-				587CCFCD2F36A0C0001E9312 /* VungleYandexMobileAdsAdapters in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,14 +91,7 @@
 			);
 			name = techucheba;
 			packageProductDependencies = (
-				587CCFC42F36A0C0001E9312 /* AppLovinYandexMobileAdsAdapters */,
-				587CCFC62F36A0C0001E9312 /* GoogleYandexMobileAdsAdapters */,
-				587CCFC82F36A0C0001E9312 /* MintegralYandexMobileAdsAdapters */,
-				587CCFCA2F36A0C0001E9312 /* MyTargetYandexMobileAdsAdapters */,
-				587CCFCC2F36A0C0001E9312 /* VungleYandexMobileAdsAdapters */,
 				587CCFCE2F36A0C0001E9312 /* YandexMobileAds */,
-				587CCFD02F36A0C0001E9312 /* YandexMobileAdsInstream */,
-				587CCFD22F36A0C0001E9312 /* YandexMobileAdsMediation */,
 			);
 			productName = techucheba;
 			productReference = 58E97E7D2DED934100FDE7C6 /* techucheba.app */;
@@ -418,45 +397,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		587CCFC42F36A0C0001E9312 /* AppLovinYandexMobileAdsAdapters */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 587CCFC12F369703001E9312 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
-			productName = AppLovinYandexMobileAdsAdapters;
-		};
-		587CCFC62F36A0C0001E9312 /* GoogleYandexMobileAdsAdapters */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 587CCFC12F369703001E9312 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
-			productName = GoogleYandexMobileAdsAdapters;
-		};
-		587CCFC82F36A0C0001E9312 /* MintegralYandexMobileAdsAdapters */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 587CCFC12F369703001E9312 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
-			productName = MintegralYandexMobileAdsAdapters;
-		};
-		587CCFCA2F36A0C0001E9312 /* MyTargetYandexMobileAdsAdapters */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 587CCFC12F369703001E9312 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
-			productName = MyTargetYandexMobileAdsAdapters;
-		};
-		587CCFCC2F36A0C0001E9312 /* VungleYandexMobileAdsAdapters */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 587CCFC12F369703001E9312 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
-			productName = VungleYandexMobileAdsAdapters;
-		};
 		587CCFCE2F36A0C0001E9312 /* YandexMobileAds */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 587CCFC12F369703001E9312 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
 			productName = YandexMobileAds;
-		};
-		587CCFD02F36A0C0001E9312 /* YandexMobileAdsInstream */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 587CCFC12F369703001E9312 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
-			productName = YandexMobileAdsInstream;
-		};
-		587CCFD22F36A0C0001E9312 /* YandexMobileAdsMediation */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 587CCFC12F369703001E9312 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
-			productName = YandexMobileAdsMediation;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -15,7 +15,6 @@ struct techuchebaApp: App {
     let persistenceController = PersistenceController.shared
 
     init() {
-        // Инициализация Yandex Mobile Ads SDK
         MobileAds.initializeSDK()
     }
 

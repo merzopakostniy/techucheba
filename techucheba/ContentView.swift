@@ -10,6 +10,33 @@ import CoreData
 import Foundation
 import YandexMobileAds
 
+enum AppPalette {
+    static let bgTop = Color(red: 0.06, green: 0.07, blue: 0.08)
+    static let bgBottom = Color(red: 0.16, green: 0.17, blue: 0.20)
+    static let accent = Color(red: 0.86, green: 0.27, blue: 0.12)
+    static let accent2 = Color(red: 0.96, green: 0.57, blue: 0.12)
+    static let surface = Color(red: 0.14, green: 0.15, blue: 0.18)
+    static let surfaceStrong = Color(red: 0.10, green: 0.11, blue: 0.13)
+    static let stroke = Color.white.opacity(0.12)
+    static let textPrimary = Color.white
+    static let textSecondary = Color.white.opacity(0.78)
+    static let textMuted = Color.white.opacity(0.6)
+}
+
+struct AppBackground: View {
+    var body: some View {
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [AppPalette.bgTop, AppPalette.bgBottom]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            AppPalette.accent.opacity(0.18)
+                .blur(radius: 120)
+                .offset(x: 120, y: -140)
+            AppPalette.accent2.opacity(0.12)
+                .blur(radius: 140)
+                .offset(x: -120, y: 140)
+        }
+        .ignoresSafeArea()
+    }
+}
 
 
 
@@ -48,40 +75,6 @@ struct Depot: Identifiable, Hashable, Equatable {
 }
 
 
-struct BannerAdView: UIViewRepresentable {
-    func makeUIView(context: Context) -> AdView {
-        let adSize = BannerAdSize.fixedSize(withWidth: 350, height: 50)
-        let adView = AdView(adUnitID: "R-M-15742337-1", adSize: adSize)
-        adView.delegate = context.coordinator
-        adView.loadAd()
-        return adView
-    }
-
-    func updateUIView(_ uiView: AdView, context: Context) {}
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator()
-    }
-
-    class Coordinator: NSObject, AdViewDelegate {
-        func adViewDidLoad(_ adView: AdView) {
-            print("✅ Yandex Ad loaded successfully")
-        }
-        
-        func adViewDidFailLoading(_ adView: AdView, error: Error) {
-            print("❌ Yandex Ad failed: \(error.localizedDescription)")
-        }
-        
-        func adViewDidClick(_ adView: AdView) {
-            print("👆 Ad clicked")
-        }
-        
-        func adView(_ adView: AdView, willPresentScreen viewController: UIViewController?) {
-            print("📱 Ad will present screen")
-        }
-    }
-}
-
 struct ContentView: View {
     @State private var selectedDepot: Depot = {
         if let savedName = UserDefaults.standard.string(forKey: "selectedDepotName"),
@@ -100,31 +93,38 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.purple.opacity(0.7), Color.blue.opacity(0.7)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                .ignoresSafeArea()
-            Color.white.opacity(0.1)
-                .ignoresSafeArea()
-                .blur(radius: 40)
+            AppBackground()
             VStack(spacing: 28) {
                 HStack {
                     Button(action: { showDepotSheet = true }) {
                         Image(systemName: "line.3.horizontal")
                             .font(.title2)
-                            .foregroundColor(.white)
+                            .foregroundColor(AppPalette.textPrimary)
                             .padding(12)
-                            .background(Color.white.opacity(0.12))
+                            .background(AppPalette.surface)
                             .clipShape(Circle())
-                            .shadow(radius: 4)
+                            .shadow(color: Color.black.opacity(0.35), radius: 6, x: 0, y: 4)
                     }
                     Spacer()
-                    Button(action: { showInfoSheet = true }) {
-                        Image(systemName: "info.circle")
-                            .font(.title2)
-                            .foregroundColor(.white)
-                            .padding(12)
-                            .background(Color.white.opacity(0.12))
-                            .clipShape(Circle())
-                            .shadow(radius: 4)
+                    HStack(spacing: 10) {
+                        Button(action: { showInfoSheet = true }) {
+                            Image(systemName: "info.circle")
+                                .font(.title2)
+                                .foregroundColor(AppPalette.textPrimary)
+                                .padding(12)
+                                .background(AppPalette.surface)
+                                .clipShape(Circle())
+                                .shadow(color: Color.black.opacity(0.35), radius: 6, x: 0, y: 4)
+                        }
+                        Button(action: { showElectroSafetySheet = true }) {
+                            Image(systemName: "bolt.fill")
+                                .font(.title2)
+                                .foregroundColor(AppPalette.textPrimary)
+                                .padding(12)
+                                .background(AppPalette.surface)
+                                .clipShape(Circle())
+                                .shadow(color: Color.black.opacity(0.35), radius: 6, x: 0, y: 4)
+                        }
                     }
                 }
                 .padding(.horizontal)
@@ -133,15 +133,15 @@ struct ContentView: View {
                 HStack {
                     ZStack {
                         RoundedRectangle(cornerRadius: 18, style: .continuous)
-                            .fill(Color.white.opacity(0.18))
-                            .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
+                            .fill(AppPalette.surface)
+                            .shadow(color: .black.opacity(0.35), radius: 10, x: 0, y: 6)
                         TextField("Введите номер вопроса или ключевое слово", text: $keyInput)
                             .padding(.horizontal, 18)
                             .padding(.vertical, 14)
-                            .foregroundColor(.white)
+                            .foregroundColor(AppPalette.textPrimary)
                             .font(.title3)
                             .focused($isTextFieldFocused)
-                            .accentColor(.white)
+                            .accentColor(AppPalette.accent2)
                             .disableAutocorrection(true)
                             .autocapitalization(.none)
                     }
@@ -152,37 +152,18 @@ struct ContentView: View {
                     }) {
                         ZStack {
                             Circle()
-                                .fill(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .top, endPoint: .bottom))
+                                .fill(LinearGradient(gradient: Gradient(colors: [AppPalette.accent, AppPalette.accent2]), startPoint: .top, endPoint: .bottom))
                                 .frame(width: 52, height: 52)
-                                .shadow(color: .purple.opacity(0.3), radius: 8, x: 0, y: 4)
+                                .shadow(color: AppPalette.accent.opacity(0.35), radius: 10, x: 0, y: 6)
                             Image(systemName: "magnifyingglass")
                                 .font(.title2.bold())
-                                .foregroundColor(.white)
+                                .foregroundColor(AppPalette.textPrimary)
                         }
                     }
                     .buttonStyle(PlainButtonStyle())
                     .scaleEffect(isTextFieldFocused ? 1.1 : 1.0)
                     .animation(.spring(), value: isTextFieldFocused)
                 }
-                .padding(.horizontal)
-                
-                Button(action: { showElectroSafetySheet = true }) {
-                    HStack(spacing: 10) {
-                        Image(systemName: "bolt.shield")
-                            .font(.title3.bold())
-                        Text("Сдача электробезопасности")
-                            .font(.headline)
-                    }
-                    .foregroundColor(.white)
-                    .padding(.vertical, 12)
-                    .frame(maxWidth: .infinity)
-                    .background(
-                        LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.9), Color.purple.opacity(0.9)]), startPoint: .leading, endPoint: .trailing)
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-                    .shadow(color: Color.black.opacity(0.18), radius: 10, x: 0, y: 6)
-                }
-                .buttonStyle(PlainButtonStyle())
                 .padding(.horizontal)
                 // Карточка результата
                 Spacer(minLength: 1)
@@ -208,15 +189,14 @@ struct ContentView: View {
                 BannerAdView()
                     .frame(height: 50)
                     .background(
-                        RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .fill(Color.white.opacity(0.15))
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .fill(AppPalette.surfaceStrong)
                     )
                     .overlay(
-                        RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .stroke(Color.white.opacity(0.5), lineWidth: 2)
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .stroke(AppPalette.stroke, lineWidth: 1.2)
                     )
-                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                    .shadow(color: .black.opacity(0.12), radius: 8, x: 0, y: 4)
+                    .shadow(color: Color.black.opacity(0.45), radius: 10, x: 0, y: 6)
                     .padding(.horizontal, 16)
             }
         }
@@ -255,6 +235,40 @@ struct ContentView: View {
     }
 }
 
+struct BannerAdView: UIViewRepresentable {
+    func makeUIView(context: Context) -> AdView {
+        let adSize = BannerAdSize.fixedSize(withWidth: 350, height: 50)
+        let adView = AdView(adUnitID: "R-M-15742337-1", adSize: adSize)
+        adView.delegate = context.coordinator
+        adView.loadAd()
+        return adView
+    }
+
+    func updateUIView(_ uiView: AdView, context: Context) {}
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+
+    class Coordinator: NSObject, AdViewDelegate {
+        func adViewDidLoad(_ adView: AdView) {
+            print("✅ Yandex Ad loaded successfully")
+        }
+        
+        func adViewDidFailLoading(_ adView: AdView, error: Error) {
+            print("❌ Yandex Ad failed: \(error.localizedDescription)")
+        }
+        
+        func adViewDidClick(_ adView: AdView) {
+            print("👆 Ad clicked")
+        }
+        
+        func adView(_ adView: AdView, willPresentScreen viewController: UIViewController?) {
+            print("📱 Ad will present screen")
+        }
+    }
+}
+
 struct ElectroSafetySheet: View {
     @Binding var showElectroSafetySheet: Bool
     @State private var keyInput: String = ""
@@ -264,23 +278,19 @@ struct ElectroSafetySheet: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.purple.opacity(0.7), Color.blue.opacity(0.7)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                .ignoresSafeArea()
-            Color.white.opacity(0.1)
-                .ignoresSafeArea()
-                .blur(radius: 40)
+            AppBackground()
             VStack(spacing: 24) {
                 HStack {
                     Text("Электробезопасность")
                         .font(.title2.bold())
-                        .foregroundColor(.white)
+                        .foregroundColor(AppPalette.textPrimary)
                     Spacer()
                     Button(action: { showElectroSafetySheet = false }) {
                         Image(systemName: "xmark")
                             .font(.title3.bold())
-                            .foregroundColor(.white)
+                            .foregroundColor(AppPalette.textPrimary)
                             .padding(10)
-                            .background(Color.white.opacity(0.12))
+                            .background(AppPalette.surface)
                             .clipShape(Circle())
                     }
                 }
@@ -290,15 +300,15 @@ struct ElectroSafetySheet: View {
                 HStack {
                     ZStack {
                         RoundedRectangle(cornerRadius: 18, style: .continuous)
-                            .fill(Color.white.opacity(0.18))
-                            .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
+                            .fill(AppPalette.surface)
+                            .shadow(color: .black.opacity(0.35), radius: 10, x: 0, y: 6)
                         TextField("Введите номер вопроса или ключевое слово", text: $keyInput)
                             .padding(.horizontal, 18)
                             .padding(.vertical, 14)
-                            .foregroundColor(.white)
+                            .foregroundColor(AppPalette.textPrimary)
                             .font(.title3)
                             .focused($isTextFieldFocused)
-                            .accentColor(.white)
+                            .accentColor(AppPalette.accent2)
                             .disableAutocorrection(true)
                             .autocapitalization(.none)
                     }
@@ -309,12 +319,12 @@ struct ElectroSafetySheet: View {
                     }) {
                         ZStack {
                             Circle()
-                                .fill(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .top, endPoint: .bottom))
+                                .fill(LinearGradient(gradient: Gradient(colors: [AppPalette.accent, AppPalette.accent2]), startPoint: .top, endPoint: .bottom))
                                 .frame(width: 52, height: 52)
-                                .shadow(color: .purple.opacity(0.3), radius: 8, x: 0, y: 4)
+                                .shadow(color: AppPalette.accent.opacity(0.35), radius: 10, x: 0, y: 6)
                             Image(systemName: "magnifyingglass")
                                 .font(.title2.bold())
-                                .foregroundColor(.white)
+                                .foregroundColor(AppPalette.textPrimary)
                         }
                     }
                     .buttonStyle(PlainButtonStyle())
@@ -343,19 +353,7 @@ struct ElectroSafetySheet: View {
                     .animation(.spring(response: 0.5, dampingFraction: 0.8), value: foundQAs)
                 }
                 
-                BannerAdView()
-                    .frame(height: 50)
-                    .background(
-                        RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .fill(Color.white.opacity(0.15))
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .stroke(Color.white.opacity(0.5), lineWidth: 2)
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                    .shadow(color: .black.opacity(0.12), radius: 8, x: 0, y: 4)
-                    .padding(.horizontal, 16)
+                
             }
         }
         .ignoresSafeArea(.keyboard)
@@ -387,29 +385,29 @@ struct QAResultCard: View {
             VStack(alignment: .leading, spacing: 20) {
                 Text("Вопрос")
                     .font(.subheadline)
-                    .foregroundColor(.black.opacity(0.8))
+                    .foregroundColor(AppPalette.textMuted)
                 Text(qa.question)
                     .font(.body)
-                    .foregroundColor(.white)
+                    .foregroundColor(AppPalette.textPrimary)
                     .padding(.bottom, 6)
-                Divider().background(Color.white.opacity(0.3))
+                Divider().background(AppPalette.stroke)
                 Text("Ответ")
                     .font(.subheadline)
-                    .foregroundColor(.green.opacity(0.8))
+                    .foregroundColor(AppPalette.accent2)
                 Text(qa.answer)
                     .font(.body)
-                    .foregroundColor(.white)
+                    .foregroundColor(AppPalette.textPrimary)
             }
             .padding(28)
             .background(
-                BlurView(style: .systemUltraThinMaterialDark)
-                    .clipShape(RoundedRectangle(cornerRadius: 32, style: .continuous))
+                RoundedRectangle(cornerRadius: 28, style: .continuous)
+                    .fill(AppPalette.surface)
             )
             .overlay(
-                RoundedRectangle(cornerRadius: 32, style: .continuous)
-                    .stroke(Color.white.opacity(0.18), lineWidth: 1.5)
+                RoundedRectangle(cornerRadius: 28, style: .continuous)
+                    .stroke(AppPalette.stroke, lineWidth: 1.5)
             )
-            .shadow(color: Color.purple.opacity(0.18), radius: 18, x: 0, y: 8)
+            .shadow(color: AppPalette.accent.opacity(0.2), radius: 16, x: 0, y: 8)
             .padding(.horizontal, 24)
             .padding(.top, 2)
         }
@@ -421,24 +419,24 @@ struct EmptyResultCard: View {
         VStack(spacing: 18) {
             Image(systemName: "exclamationmark.triangle.fill")
                 .font(.system(size: 44))
-                .foregroundColor(.yellow.opacity(0.8))
+                .foregroundColor(AppPalette.accent2)
             Text("Вопрос по ключу не найден")
                 .font(.title3.bold())
-                .foregroundColor(.white.opacity(0.9))
+                .foregroundColor(AppPalette.textPrimary)
             Text("Проверьте правильность ключа или выберите другое депо.")
                 .font(.body)
-                .foregroundColor(.white.opacity(0.7))
+                .foregroundColor(AppPalette.textSecondary)
         }
         .padding(32)
         .background(
-            BlurView(style: .systemUltraThinMaterialDark)
-                .clipShape(RoundedRectangle(cornerRadius: 32, style: .continuous))
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .fill(AppPalette.surface)
         )
         .overlay(
-            RoundedRectangle(cornerRadius: 32, style: .continuous)
-                .stroke(Color.white.opacity(0.18), lineWidth: 1.5)
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .stroke(AppPalette.stroke, lineWidth: 1.5)
         )
-        .shadow(color: Color.purple.opacity(0.18), radius: 18, x: 0, y: 8)
+        .shadow(color: AppPalette.accent.opacity(0.2), radius: 16, x: 0, y: 8)
         .padding(.horizontal, 24)
         .padding(.top, 2)
     }
@@ -451,22 +449,17 @@ struct DepotSheet: View {
     
     var body: some View {
         ZStack {
-            // Градиентный фон
-            LinearGradient(gradient: Gradient(colors: [Color.purple.opacity(0.7), Color.blue.opacity(0.7)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                .ignoresSafeArea()
-            Color.white.opacity(0.1)
-                .ignoresSafeArea()
-                .blur(radius: 40)
+            AppBackground()
             
             VStack(spacing: 0) {
                 // УБРАН HStack с крестиком
                 VStack(spacing: 0) {
                     Text("Выберите депо")
                         .font(.title2.bold())
-                        .foregroundColor(.white)
+                        .foregroundColor(AppPalette.textPrimary)
                         .padding(.top, 18)
                         .padding(.bottom, 8)
-                    Divider().background(Color.white.opacity(0.18))
+                    Divider().background(AppPalette.stroke)
                     ScrollView {
                         VStack(spacing: 0) {
                 ForEach(depots) { depot in
@@ -480,17 +473,17 @@ struct DepotSheet: View {
                         HStack {
                                         Image(systemName: selectedDepot == depot ? "building.2.crop.circle.fill" : "building.2.crop.circle")
                                             .font(.system(size: 28, weight: .semibold))
-                                            .foregroundColor(selectedDepot == depot ? Color.black : Color.white.opacity(0.7))
+                                            .foregroundColor(selectedDepot == depot ? AppPalette.accent2 : AppPalette.textMuted)
                                             .scaleEffect(selectedDepot == depot ? 1.15 : 1.0)
                                             .animation(.spring(), value: selectedDepot == depot)
                             Text(depot.name)
                                             .font(.title3.weight(selectedDepot == depot ? .bold : .regular))
-                                            .foregroundColor(selectedDepot == depot ? Color.black : Color.white.opacity(0.92))
+                                            .foregroundColor(selectedDepot == depot ? AppPalette.textPrimary : AppPalette.textSecondary)
                                             .padding(.leading, 8)
                                 Spacer()
                                         if selectedDepot == depot {
                                             Image(systemName: "checkmark.circle.fill")
-                                                .foregroundColor(.black)
+                                                .foregroundColor(AppPalette.accent2)
                                                 .font(.system(size: 22, weight: .bold))
                                                 .transition(.scale)
                                         }
@@ -499,8 +492,8 @@ struct DepotSheet: View {
                                     .padding(.horizontal, 22)
                                     .background(
                                         RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                            .fill(selectedDepot == depot ? Color.white.opacity(0.13) : Color.clear)
-                                            .shadow(color: selectedDepot == depot ? Color.blue.opacity(0.13) : Color.clear, radius: 8, x: 0, y: 4)
+                                            .fill(selectedDepot == depot ? AppPalette.surface : Color.clear)
+                                            .shadow(color: selectedDepot == depot ? Color.black.opacity(0.35) : Color.clear, radius: 8, x: 0, y: 4)
                                     )
                                     .padding(.horizontal, 8)
                                 }
@@ -513,14 +506,14 @@ struct DepotSheet: View {
                     .padding(.bottom, 8)
                 }
                 .background(
-                    BlurView(style: .systemUltraThinMaterialDark)
-                        .clipShape(RoundedRectangle(cornerRadius: 36, style: .continuous))
+                    RoundedRectangle(cornerRadius: 30, style: .continuous)
+                        .fill(AppPalette.surfaceStrong)
                 )
                 .overlay(
-                    RoundedRectangle(cornerRadius: 36, style: .continuous)
-                        .stroke(Color.white.opacity(0.18), lineWidth: 1.5)
+                    RoundedRectangle(cornerRadius: 30, style: .continuous)
+                        .stroke(AppPalette.stroke, lineWidth: 1.5)
                 )
-                .shadow(color: Color.purple.opacity(0.18), radius: 18, x: 0, y: 8)
+                .shadow(color: Color.black.opacity(0.5), radius: 16, x: 0, y: 10)
                 .padding(.horizontal, 12)
                 .frame(maxHeight: .infinity)
                 .padding(.vertical, 18)
@@ -529,76 +522,63 @@ struct DepotSheet: View {
     }
 }
 
-// BlurView для эффекта стекла
-struct BlurView: UIViewRepresentable {
-    var style: UIBlurEffect.Style
-    func makeUIView(context: Context) -> UIVisualEffectView {
-        return UIVisualEffectView(effect: UIBlurEffect(style: style))
-    }
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {}
-}
-
 // Новая вкладка Инфо
 struct InfoSheet: View {
     @Binding var showInfoSheet: Bool
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.purple.opacity(0.7), Color.blue.opacity(0.7)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                .ignoresSafeArea()
-            Color.white.opacity(0.1)
-                .ignoresSafeArea()
-                .blur(radius: 40)
+            AppBackground()
             VStack(spacing: 0) {
                 VStack(spacing: 0) {
                     HStack {
                         Text("Информация о приложении")
                             .font(.title2.bold())
-                            .foregroundColor(.white)
+                            .foregroundColor(AppPalette.textPrimary)
                         Spacer()
                         Button(action: { showInfoSheet = false }) {
                             Image(systemName: "xmark")
                                 .font(.title3.bold())
-                                .foregroundColor(.white)
+                                .foregroundColor(AppPalette.textPrimary)
                                 .padding(10)
-                                .background(Color.white.opacity(0.12))
+                                .background(AppPalette.surface)
                                 .clipShape(Circle())
                         }
                     }
                     .padding(.top, 18)
                     .padding(.horizontal, 18)
                     .padding(.bottom, 8)
-                    Divider().background(Color.white.opacity(0.18))
+                    Divider().background(AppPalette.stroke)
                     ScrollView {
                         VStack(alignment: .leading, spacing: 18) {
                             Text("Как пользоваться:")
                                 .font(.headline)
-                                .foregroundColor(.black)
+                                .foregroundColor(AppPalette.textPrimary)
                             Text("1. Выберите депо (слева сверху).\n2. Введите номер вопроса (например, П1, М10) или ключевое слово.\n3. Получите ответ.\n\nМожно искать по номеру, части вопроса или ключевому слову.")
                                 .font(.body)
-                                .foregroundColor(.black.opacity(0.85))
-                            Divider().background(Color.white.opacity(0.18))
+                                .foregroundColor(AppPalette.textSecondary)
+                            Divider().background(AppPalette.stroke)
                             Text("Наименования ключей:")
                                 .font(.headline)
-                                .foregroundColor(.black)
+                                .foregroundColor(AppPalette.textPrimary)
                             VStack(alignment: .leading, spacing: 6) {
                                 Text("П — ПТЭ, Пн — Пневматика, М — Механика, У — Управление, А - АТЗ, Э — Электрика, Т — ТРА, ОТ - Охрана Труда, УР")
                                     .font(.body)
-                                    .foregroundColor(.black.opacity(0.85))
+                                    .foregroundColor(AppPalette.textSecondary)
                                 Text("Пример: П1 — ПТЭ, М10 — Механика, У5 — Управление и т.д.")
                                     .font(.body)
-                                    .foregroundColor(.black.opacity(0.85))
+                                    .foregroundColor(AppPalette.textSecondary)
                             }
-                            Divider().background(Color.white.opacity(0.18))
+                            Divider().background(AppPalette.stroke)
                             Text("Совет: если не знаете точный номер, попробуйте ввести часть вопроса или ключевое слово.")
                                 .font(.footnote)
-                                .foregroundColor(.green)
-                            Divider().background(Color.white.opacity(0.18))
+                                .foregroundColor(AppPalette.accent2)
+                            Divider().background(AppPalette.stroke)
                                HStack {
                                    Image(systemName: "lock.shield")
-                                       .foregroundColor(.black)
+                                       .foregroundColor(AppPalette.textSecondary)
                                    Link("Политика конфиденциальности", destination: URL(string: "https://github.com/merzopakostniy/Metrotest/issues/1")!)
                                        .font(.footnote.bold())
-                                       .foregroundColor(.black)
+                                       .foregroundColor(AppPalette.accent2)
                                }
                                .padding(.top, 8)
                            }
@@ -607,14 +587,14 @@ struct InfoSheet: View {
                     }
                 }
                 .background(
-                    BlurView(style: .systemUltraThinMaterialDark)
-                        .clipShape(RoundedRectangle(cornerRadius: 36, style: .continuous))
+                    RoundedRectangle(cornerRadius: 30, style: .continuous)
+                        .fill(AppPalette.surfaceStrong)
                 )
                 .overlay(
-                    RoundedRectangle(cornerRadius: 36, style: .continuous)
-                        .stroke(Color.white.opacity(0.18), lineWidth: 1.5)
+                    RoundedRectangle(cornerRadius: 30, style: .continuous)
+                        .stroke(AppPalette.stroke, lineWidth: 1.5)
                 )
-                .shadow(color: Color.purple.opacity(0.18), radius: 18, x: 0, y: 8)
+                .shadow(color: Color.black.opacity(0.5), radius: 16, x: 0, y: 10)
                 .padding(.horizontal, 12)
                 .frame(maxHeight: .infinity)
                 .padding(.vertical, 18)
