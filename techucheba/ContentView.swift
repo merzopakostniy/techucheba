@@ -38,6 +38,71 @@ struct AppBackground: View {
     }
 }
 
+final class ElectroSafetyInterstitial: NSObject, ObservableObject, InterstitialAdLoaderDelegate, InterstitialAdDelegate {
+    private var loader: InterstitialAdLoader?
+    private var interstitialAd: InterstitialAd?
+    private var isLoading = false
+    private var pendingCompletion: (() -> Void)?
+
+    func load() {
+        guard !isLoading else { return }
+        isLoading = true
+        let loader = InterstitialAdLoader()
+        loader.delegate = self
+        loader.loadAd(with: AdRequestConfiguration(adUnitID: "R-M-15742337-5"))
+        self.loader = loader
+    }
+
+    func show(onComplete: @escaping () -> Void) {
+        if let ad = interstitialAd, let rootVC = Self.rootViewController() {
+            pendingCompletion = onComplete
+            ad.show(from: rootVC)
+        } else {
+            load()
+            onComplete()
+        }
+    }
+
+    func interstitialAdLoader(_ adLoader: InterstitialAdLoader, didLoad interstitialAd: InterstitialAd) {
+        self.interstitialAd = interstitialAd
+        interstitialAd.delegate = self
+        isLoading = false
+    }
+
+    func interstitialAdLoader(_ adLoader: InterstitialAdLoader, didFailToLoadWithError error: AdRequestError) {
+        isLoading = false
+        interstitialAd = nil
+    }
+
+    func interstitialAdDidDismiss(_ interstitialAd: InterstitialAd) {
+        self.interstitialAd = nil
+        finish()
+        load()
+    }
+
+    func interstitialAd(_ interstitialAd: InterstitialAd, didFailToShowWithError error: Error) {
+        self.interstitialAd = nil
+        finish()
+        load()
+    }
+
+    private func finish() {
+        let completion = pendingCompletion
+        pendingCompletion = nil
+        DispatchQueue.main.async {
+            completion?()
+        }
+    }
+
+    private static func rootViewController() -> UIViewController? {
+        UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first { $0.isKeyWindow }?
+            .rootViewController
+    }
+}
+
 
 
 let depots: [Depot] = [
@@ -90,6 +155,7 @@ struct ContentView: View {
     @State private var showDepotSheet: Bool = false
     @State private var showInfoSheet: Bool = false // Новое состояние для инфо
     @State private var showElectroSafetySheet: Bool = false
+    @StateObject private var electroSafetyInterstitial = ElectroSafetyInterstitial()
     
     var body: some View {
         ZStack {
@@ -116,7 +182,11 @@ struct ContentView: View {
                                 .clipShape(Circle())
                                 .shadow(color: Color.black.opacity(0.35), radius: 6, x: 0, y: 4)
                         }
-                        Button(action: { showElectroSafetySheet = true }) {
+                        Button(action: {
+                            electroSafetyInterstitial.show {
+                                showElectroSafetySheet = true
+                            }
+                        }) {
                             Image(systemName: "bolt.fill")
                                 .font(.title2)
                                 .foregroundColor(AppPalette.textPrimary)
@@ -186,7 +256,7 @@ struct ContentView: View {
                     .animation(.spring(response: 0.5, dampingFraction: 0.8), value: foundQAs)
                 }
                 
-                BannerAdView()
+                BannerAdView(adUnitID: "R-M-15742337-1")
                     .frame(height: 50)
                     .background(
                         RoundedRectangle(cornerRadius: 14, style: .continuous)
@@ -201,6 +271,9 @@ struct ContentView: View {
             }
         }
         .ignoresSafeArea(.keyboard)
+        .onAppear {
+            electroSafetyInterstitial.load()
+        }
         .sheet(isPresented: $showDepotSheet) {
             DepotSheet(selectedDepot: $selectedDepot, showDepotSheet: $showDepotSheet, onDepotChange: {
                 showResult = false
@@ -236,9 +309,11 @@ struct ContentView: View {
 }
 
 struct BannerAdView: UIViewRepresentable {
+    let adUnitID: String
+
     func makeUIView(context: Context) -> AdView {
         let adSize = BannerAdSize.fixedSize(withWidth: 350, height: 50)
-        let adView = AdView(adUnitID: "R-M-15742337-1", adSize: adSize)
+        let adView = AdView(adUnitID: adUnitID, adSize: adSize)
         adView.delegate = context.coordinator
         adView.loadAd()
         return adView
@@ -353,7 +428,18 @@ struct ElectroSafetySheet: View {
                     .animation(.spring(response: 0.5, dampingFraction: 0.8), value: foundQAs)
                 }
                 
-                
+                BannerAdView(adUnitID: "R-M-15742337-6")
+                    .frame(height: 50)
+                    .background(
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .fill(AppPalette.surfaceStrong)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .stroke(AppPalette.stroke, lineWidth: 1.2)
+                    )
+                    .shadow(color: Color.black.opacity(0.45), radius: 10, x: 0, y: 6)
+                    .padding(.horizontal, 16)
             }
         }
         .ignoresSafeArea(.keyboard)
