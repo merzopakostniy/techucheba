@@ -7,7 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DC4F8E7F2E921C5600311E88 /* MyTrackerSDK in Frameworks */ = {isa = PBXBuildFile; productRef = DC4F8E7E2E921C5600311E88 /* MyTrackerSDK */; };
+		587CCFC52F36A0C0001E9312 /* AppLovinYandexMobileAdsAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 587CCFC42F36A0C0001E9312 /* AppLovinYandexMobileAdsAdapters */; };
+		587CCFC72F36A0C0001E9312 /* GoogleYandexMobileAdsAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 587CCFC62F36A0C0001E9312 /* GoogleYandexMobileAdsAdapters */; };
+		587CCFC92F36A0C0001E9312 /* MintegralYandexMobileAdsAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 587CCFC82F36A0C0001E9312 /* MintegralYandexMobileAdsAdapters */; };
+		587CCFCB2F36A0C0001E9312 /* MyTargetYandexMobileAdsAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 587CCFCA2F36A0C0001E9312 /* MyTargetYandexMobileAdsAdapters */; };
+		587CCFCD2F36A0C0001E9312 /* VungleYandexMobileAdsAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 587CCFCC2F36A0C0001E9312 /* VungleYandexMobileAdsAdapters */; };
+		587CCFCF2F36A0C0001E9312 /* YandexMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 587CCFCE2F36A0C0001E9312 /* YandexMobileAds */; };
+		587CCFD12F36A0C0001E9312 /* YandexMobileAdsInstream in Frameworks */ = {isa = PBXBuildFile; productRef = 587CCFD02F36A0C0001E9312 /* YandexMobileAdsInstream */; };
+		587CCFD32F36A0C0001E9312 /* YandexMobileAdsMediation in Frameworks */ = {isa = PBXBuildFile; productRef = 587CCFD22F36A0C0001E9312 /* YandexMobileAdsMediation */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,7 +47,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC4F8E7F2E921C5600311E88 /* MyTrackerSDK in Frameworks */,
+				587CCFC52F36A0C0001E9312 /* AppLovinYandexMobileAdsAdapters in Frameworks */,
+				587CCFCB2F36A0C0001E9312 /* MyTargetYandexMobileAdsAdapters in Frameworks */,
+				587CCFC72F36A0C0001E9312 /* GoogleYandexMobileAdsAdapters in Frameworks */,
+				587CCFD32F36A0C0001E9312 /* YandexMobileAdsMediation in Frameworks */,
+				587CCFC92F36A0C0001E9312 /* MintegralYandexMobileAdsAdapters in Frameworks */,
+				587CCFD12F36A0C0001E9312 /* YandexMobileAdsInstream in Frameworks */,
+				587CCFCF2F36A0C0001E9312 /* YandexMobileAds in Frameworks */,
+				587CCFCD2F36A0C0001E9312 /* VungleYandexMobileAdsAdapters in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,7 +105,14 @@
 			);
 			name = techucheba;
 			packageProductDependencies = (
-				DC4F8E7E2E921C5600311E88 /* MyTrackerSDK */,
+				587CCFC42F36A0C0001E9312 /* AppLovinYandexMobileAdsAdapters */,
+				587CCFC62F36A0C0001E9312 /* GoogleYandexMobileAdsAdapters */,
+				587CCFC82F36A0C0001E9312 /* MintegralYandexMobileAdsAdapters */,
+				587CCFCA2F36A0C0001E9312 /* MyTargetYandexMobileAdsAdapters */,
+				587CCFCC2F36A0C0001E9312 /* VungleYandexMobileAdsAdapters */,
+				587CCFCE2F36A0C0001E9312 /* YandexMobileAds */,
+				587CCFD02F36A0C0001E9312 /* YandexMobileAdsInstream */,
+				587CCFD22F36A0C0001E9312 /* YandexMobileAdsMediation */,
 			);
 			productName = techucheba;
 			productReference = 58E97E7D2DED934100FDE7C6 /* techucheba.app */;
@@ -122,7 +143,6 @@
 			mainGroup = 58E97E742DED934100FDE7C6;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				DC4F8E7D2E921C5600311E88 /* XCRemoteSwiftPackageReference "mytracker-ios-spm" */,
 				587CCFC12F369703001E9312 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -213,8 +233,10 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				dlmcdmfkfrkf = "";
 			};
 			name = Debug;
 		};
@@ -269,6 +291,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				dlmcdmfkfrkf = "";
 			};
 			name = Release;
 		};
@@ -303,6 +326,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.4;
 				MARKETING_VERSION = 1.6;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = merzopakostniy.techucheba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -346,6 +370,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.4;
 				MARKETING_VERSION = 1.6;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = merzopakostniy.techucheba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -390,21 +415,48 @@
 				minimumVersion = 7.18.3;
 			};
 		};
-		DC4F8E7D2E921C5600311E88 /* XCRemoteSwiftPackageReference "mytracker-ios-spm" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/myTrackerSDK/mytracker-ios-spm";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.4.2;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		DC4F8E7E2E921C5600311E88 /* MyTrackerSDK */ = {
+		587CCFC42F36A0C0001E9312 /* AppLovinYandexMobileAdsAdapters */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DC4F8E7D2E921C5600311E88 /* XCRemoteSwiftPackageReference "mytracker-ios-spm" */;
-			productName = MyTrackerSDK;
+			package = 587CCFC12F369703001E9312 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
+			productName = AppLovinYandexMobileAdsAdapters;
+		};
+		587CCFC62F36A0C0001E9312 /* GoogleYandexMobileAdsAdapters */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 587CCFC12F369703001E9312 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
+			productName = GoogleYandexMobileAdsAdapters;
+		};
+		587CCFC82F36A0C0001E9312 /* MintegralYandexMobileAdsAdapters */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 587CCFC12F369703001E9312 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
+			productName = MintegralYandexMobileAdsAdapters;
+		};
+		587CCFCA2F36A0C0001E9312 /* MyTargetYandexMobileAdsAdapters */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 587CCFC12F369703001E9312 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
+			productName = MyTargetYandexMobileAdsAdapters;
+		};
+		587CCFCC2F36A0C0001E9312 /* VungleYandexMobileAdsAdapters */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 587CCFC12F369703001E9312 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
+			productName = VungleYandexMobileAdsAdapters;
+		};
+		587CCFCE2F36A0C0001E9312 /* YandexMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 587CCFC12F369703001E9312 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
+			productName = YandexMobileAds;
+		};
+		587CCFD02F36A0C0001E9312 /* YandexMobileAdsInstream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 587CCFC12F369703001E9312 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
+			productName = YandexMobileAdsInstream;
+		};
+		587CCFD22F36A0C0001E9312 /* YandexMobileAdsMediation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 587CCFC12F369703001E9312 /* XCRemoteSwiftPackageReference "yandex-ads-sdk-ios" */;
+			productName = YandexMobileAdsMediation;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

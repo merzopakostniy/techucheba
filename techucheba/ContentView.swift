@@ -49,34 +49,34 @@ struct Depot: Identifiable, Hashable, Equatable {
 
 
 struct BannerAdView: UIViewRepresentable {
-    func makeUIView(context: Context) -> YMAAdView {
-        let adSize = YMABannerAdSize.fixedSize(with: CGSize(width: 350, height: 50))
-        let adView = YMAAdView(adUnitID: "R-M-15742337-1", adSize: adSize)
+    func makeUIView(context: Context) -> AdView {
+        let adSize = BannerAdSize.fixedSize(withWidth: 350, height: 50)
+        let adView = AdView(adUnitID: "R-M-15742337-1", adSize: adSize)
         adView.delegate = context.coordinator
         adView.loadAd()
         return adView
     }
 
-    func updateUIView(_ uiView: YMAAdView, context: Context) {}
+    func updateUIView(_ uiView: AdView, context: Context) {}
 
     func makeCoordinator() -> Coordinator {
         Coordinator()
     }
 
-    class Coordinator: NSObject, YMAAdViewDelegate {
-        func adViewDidLoad(_ adView: YMAAdView) {
+    class Coordinator: NSObject, AdViewDelegate {
+        func adViewDidLoad(_ adView: AdView) {
             print("✅ Yandex Ad loaded successfully")
         }
         
-        func adViewDidFailLoading(_ adView: YMAAdView, error: Error) {
+        func adViewDidFailLoading(_ adView: AdView, error: Error) {
             print("❌ Yandex Ad failed: \(error.localizedDescription)")
         }
         
-        func adViewDidClick(_ adView: YMAAdView) {
+        func adViewDidClick(_ adView: AdView) {
             print("👆 Ad clicked")
         }
         
-        func adView(_ adView: YMAAdView, willPresentScreen viewController: UIViewController?) {
+        func adView(_ adView: AdView, willPresentScreen viewController: UIViewController?) {
             print("📱 Ad will present screen")
         }
     }

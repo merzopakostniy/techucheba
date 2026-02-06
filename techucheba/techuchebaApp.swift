@@ -16,7 +16,7 @@ struct techuchebaApp: App {
 
     init() {
         // Инициализация Yandex Mobile Ads SDK
-        YMAMobileAds.initializeSDK()
+        MobileAds.initializeSDK()
     }
 
     var body: some Scene {
