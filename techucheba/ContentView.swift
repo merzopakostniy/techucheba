@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreData
 import Foundation
+import StoreKit
 import YandexMobileAds
 
 enum AppPalette {
@@ -165,57 +166,74 @@ struct ContentView: View {
                     Button(action: { showDepotSheet = true }) {
                         Image(systemName: "line.3.horizontal")
                             .font(.title2)
-                            .foregroundColor(AppPalette.textPrimary)
+                            .foregroundColor(AppPalette.accent2)
                             .padding(12)
                             .background(AppPalette.surface)
                             .clipShape(Circle())
-                            .shadow(color: Color.black.opacity(0.35), radius: 6, x: 0, y: 4)
+                            .overlay(
+                                Circle()
+                                    .stroke(AppPalette.accent2.opacity(0.4), lineWidth: 1)
+                            )
+                            .shadow(color: AppPalette.accent2.opacity(0.3), radius: 8, x: 0, y: 4)
                     }
                     Spacer()
                     HStack(spacing: 10) {
-                        Button(action: { showInfoSheet = true }) {
-                            Image(systemName: "info.circle")
-                                .font(.title2)
-                                .foregroundColor(AppPalette.textPrimary)
-                                .padding(12)
-                                .background(AppPalette.surface)
-                                .clipShape(Circle())
-                                .shadow(color: Color.black.opacity(0.35), radius: 6, x: 0, y: 4)
-                        }
                         Button(action: {
                             electroSafetyInterstitial.show {
                                 showElectroSafetySheet = true
                             }
                         }) {
-                            Image(systemName: "bolt.fill")
+                            Text("Электробезопасность")
+                                .font(.caption.bold())
+                                .foregroundColor(AppPalette.accent2)
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 10)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                        .fill(AppPalette.surface)
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                        .stroke(AppPalette.accent2.opacity(0.4), lineWidth: 1)
+                                )
+                                .shadow(color: AppPalette.accent2.opacity(0.3), radius: 8, x: 0, y: 4)
+                        }
+                        Button(action: { showInfoSheet = true }) {
+                            Image(systemName: "info.circle")
                                 .font(.title2)
-                                .foregroundColor(AppPalette.textPrimary)
+                                .foregroundColor(AppPalette.accent2)
                                 .padding(12)
                                 .background(AppPalette.surface)
                                 .clipShape(Circle())
-                                .shadow(color: Color.black.opacity(0.35), radius: 6, x: 0, y: 4)
+                                .overlay(
+                                    Circle()
+                                        .stroke(AppPalette.accent2.opacity(0.4), lineWidth: 1)
+                                )
+                                .shadow(color: AppPalette.accent2.opacity(0.3), radius: 8, x: 0, y: 4)
                         }
                     }
                 }
                 .padding(.horizontal)
                 .padding(.top, 16)
                 // Поле ввода ключа
-                HStack {
+                HStack(spacing: 10) {
                     ZStack {
-                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
                             .fill(AppPalette.surface)
-                            .shadow(color: .black.opacity(0.35), radius: 10, x: 0, y: 6)
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .stroke(AppPalette.accent2.opacity(0.4), lineWidth: 1)
                         TextField("Введите номер вопроса или ключевое слово", text: $keyInput)
-                            .padding(.horizontal, 18)
-                            .padding(.vertical, 14)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 10)
                             .foregroundColor(AppPalette.textPrimary)
-                            .font(.title3)
+                            .font(.body)
                             .focused($isTextFieldFocused)
                             .accentColor(AppPalette.accent2)
                             .disableAutocorrection(true)
                             .autocapitalization(.none)
                     }
-                    .frame(height: 52)
+                    .frame(height: 42)
+                    .shadow(color: AppPalette.accent2.opacity(0.3), radius: 8, x: 0, y: 4)
                     Button(action: {
                         searchQA()
                         isTextFieldFocused = false
@@ -223,10 +241,10 @@ struct ContentView: View {
                         ZStack {
                             Circle()
                                 .fill(LinearGradient(gradient: Gradient(colors: [AppPalette.accent, AppPalette.accent2]), startPoint: .top, endPoint: .bottom))
-                                .frame(width: 52, height: 52)
-                                .shadow(color: AppPalette.accent.opacity(0.35), radius: 10, x: 0, y: 6)
+                                .frame(width: 42, height: 42)
+                                .shadow(color: AppPalette.accent.opacity(0.35), radius: 8, x: 0, y: 4)
                             Image(systemName: "magnifyingglass")
-                                .font(.title2.bold())
+                                .font(.body.bold())
                                 .foregroundColor(AppPalette.textPrimary)
                         }
                     }
@@ -236,24 +254,26 @@ struct ContentView: View {
                 }
                 .padding(.horizontal)
                 // Карточка результата
-                Spacer(minLength: 1)
                 if showResult {
                     Group {
                         if !foundQAs.isEmpty {
                             ScrollView {
                                 VStack(spacing: 24) {
                                     ForEach(foundQAs, id: \ .self) { qa in
-                            QAResultCard(qa: qa)
+                                        QAResultCard(qa: qa)
                                     }
                                 }
                             }
-                                .transition(.move(edge: .bottom).combined(with: .opacity))
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
                         } else {
                             EmptyResultCard()
                                 .transition(.opacity)
                         }
                     }
+                    .frame(maxHeight: .infinity)
                     .animation(.spring(response: 0.5, dampingFraction: 0.8), value: foundQAs)
+                } else {
+                    Spacer()
                 }
                 
                 BannerAdView(adUnitID: "R-M-15742337-1")
@@ -273,6 +293,7 @@ struct ContentView: View {
         .ignoresSafeArea(.keyboard)
         .onAppear {
             electroSafetyInterstitial.load()
+            requestReviewIfNeeded()
         }
         .sheet(isPresented: $showDepotSheet) {
             DepotSheet(selectedDepot: $selectedDepot, showDepotSheet: $showDepotSheet, onDepotChange: {
@@ -304,6 +325,30 @@ struct ContentView: View {
         }
         withAnimation {
             showResult = true
+        }
+    }
+
+    private func requestReviewIfNeeded() {
+        let defaults = UserDefaults.standard
+        var launches = defaults.integer(forKey: "appLaunchCount")
+        launches += 1
+        defaults.set(launches, forKey: "appLaunchCount")
+
+        guard launches == 2 else { return }
+
+        let lastRequested = defaults.double(forKey: "lastReviewRequestDate")
+        let now = Date().timeIntervalSince1970
+        let sixtyDays: TimeInterval = 60 * 24 * 60 * 60
+
+        guard lastRequested == 0 || (now - lastRequested) >= sixtyDays else { return }
+
+        defaults.set(now, forKey: "lastReviewRequestDate")
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            if let windowScene = UIApplication.shared.connectedScenes
+                .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                SKStoreReviewController.requestReview(in: windowScene)
+            }
         }
     }
 }
